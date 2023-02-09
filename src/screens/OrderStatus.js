@@ -6,7 +6,7 @@ const OrderStatus = ({navigation}) => {
   return (
     <ScrollView>
       <View style={{flexDirection:'row',margin:10,padding:10, }}>
-        <MaterialIcons name='grid-view' size={33} color='#0caf9a' onPress={()=> navigation.pop()}/>
+        <MaterialIcons name='arrow-back-ios' size={33} color='#0caf9a' onPress={()=> navigation.pop()}/>
         <Image source={require('../assets/ME.png')} style={{position:'absolute',right:0,top:15}}/>
      </View>
       {OrderData.map((OrderData) => {

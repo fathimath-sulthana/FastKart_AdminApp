@@ -11,7 +11,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 const SignIn = ({navigation}) => {
   return (
    
-      <ScrollView style={{flex: 1, }}>
+      <ScrollView style={{flex: 1,backgroundColor:'white' }}>
         <ImageBackground 
         style={{ height: Dimensions.get('window').height/3.7,backgroundColor:'#6CBFB4'}}
         source={require('../assets/1d.png')} >
@@ -21,10 +21,7 @@ const SignIn = ({navigation}) => {
           <Image
           style={styles.image}
           source={require('../assets/ME.png')}></Image>
-          <Text style={styles.textp}>
-          Online Supermarket for all your daily needs. you are  {"\n"}just One Click
-          away from all your needs at your door  {"\n"}step.
-        </Text>
+         
         <Title style={styles.logtext}>Login Account</Title>
         <View
           style={{
@@ -69,33 +66,22 @@ const SignIn = ({navigation}) => {
           }}>
           <Text style={{alignSelf:'center',fontSize:17,color:"#fff"}} onPress={()=>{navigation.navigate('DrawerNav')}}> Sign in</Text>
         </View>
-        <Caption style={styles.text1}  onPress={()=>navigation.navigate('Register')}>If you are new, Create now </Caption>
+      
         <View style={{flexDirection:'row',justifyContent:'center'}}>
-        <Text style={styles.text}>
-          - - - - - - - - - - - - - 
-        </Text>
-        <Text style={styles.text2}>
-        Or sign in with 
-        </Text>
-        <Text style={styles.text}>
-          - - - - - - - - - - - - - 
-        </Text></View>
-        <View >
-        <View style={{flexDirection:'row',alignSelf:'center',marginRight:70}}>
-        <AntDesign name="mobile1" color={"black"} size={25} style={{alignSelf:'center',marginLeft:80}}/>
-                <Text style={styles.text}>Continue with Phone</Text>
+        
+        
         </View>
+        <View >
+        
      
          
 </View>
 
 <View style={{flexDirection:'row',alignSelf:'center',marginTop:20,marginRight:70}}>
-        <AntDesign name="google" color={"black"} size={25} style={{alignSelf:'center',marginLeft:80}}/>
-                <Text style={styles.text}>Continue with Google</Text>
+       
+                
         </View>
-<Text 
-onPress={()=>{navigation.navigate('Drawer')}}
-style={styles.texts}>Continue as guest</Text>
+
          
           </View>
         </View>

@@ -1,32 +1,131 @@
-import { StyleSheet, Text, TextInput, View ,Image,TouchableHighlight} from 'react-native'
+import { StyleSheet, Text, TextInput, View ,Image,TouchableHighlight,Alert} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Title } from 'react-native-paper'
-import React from 'react'
+import React,{useState} from 'react'
+import SelectDropdown from 'react-native-select-dropdown'
+import database from '@react-native-firebase/database';
+import storage from '@react-native-firebase/storage';
+import * as ImagePicker from "react-native-image-picker"
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+const AddProducts = (props,{navigation}) => {
+  const dropdownList = props.data
+  const[name,setName]=useState('')
+  const[price,setPrice]=useState('')
+  const[category,setCategory]=useState('')
+  const [imageSource, setImageSource] = useState(null);
+  const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+  let rootRef = database().ref();
+  function AddProducts() {
+    rootRef
+    .child('Products/')
+    .orderByChild('name','category','price')
+    .equalTo(name,quantity,price)
+    .once('value')
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        let userData = snapshot.val(name,category,price);
+        console.log(userData);
+        Alert.alert('product already exists');
+        return userData;
+      } else {
+      // addItem(name, imageSource)
+       UploadImage(imageSource,name,category,price)
+       Alert.alert('Product added')
+       console.log('Product added')
+       console.log(name)
+      }
+  });
+  }
 
-const AddProducts = ({navigation}) => {
+  function selectImage() {
+    let options = {
+      title: 'You can choose one image',
+      maxWidth: 256,
+      maxHeight: 256,
+      noData: true,
+      mediaType: 'photo',
+      storageOptions: {
+        skipBackup: true
+      }
+    };
+
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+        Alert.alert('You did not select any image');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        let source = { uri: response.assets[0].uri };
+        let uploadUri = Platform.OS === 'ios' ? source.replace('file://', '') : source;
+        // ADD THIS
+        setImageSource(source.uri,uploadUri);
+        console.log(response)
+       
+      }
+    });
+  }
+  async function UploadImage() {
+            
+    try{
+      const filename = imageSource.substring(imageSource.lastIndexOf('/') + 1);
+              const uploadUri = Platform.OS === 'ios' ? imageSource.replace('file://', '') : imageSource;
+              const reference = storage().ref("/Products/" + filename);
+  
+              await reference.putFile(uploadUri);
+              const url = await reference.getDownloadURL();
+              rootRef
+              database()
+              .ref('/Products/')
+              .push({
+                 imageSource : url,
+                 name:name,
+                 price:price,
+                 category:category
+               
+
+              }).then(() => {
+                  console.log("product added successfully")
+                  
+              }).catch((e) => {
+                  Alert.alert("Error", e.message)
+                  
+              })
+    }catch(e){
+      Alert.alert("Error", e.message)
+    }
+  }
+
   return (
     <View style={{flex:1}}>
       <View style={{flexDirection:'row',margin:10,padding:10, }}>
-        <MaterialIcons name='grid-view' size={33} color='#0caf9a' onPress={()=> navigation.pop()}/>
+        <MaterialIcons name='arrow-back-ios' size={33} color='#0caf9a' onPress={()=> navigation.pop()}/>
         <Image source={require('../assets/ME.png')} style={{position:'absolute',right:0,top:15}}/>
      </View>
      <Title style={{alignSelf:'center',color:'#0caf9a',fontSize:25}}>Add Product Details</Title>
-     <View style={{backgroundColor:'lightgrey',height:'20%',width:'55%',padding:10,margin:10,alignSelf:'center',borderRadius:20}}>
-       <View style={{}}></View>
+     <View style={{height:'20%',width:'55%',padding:10,margin:10,alignSelf:'center',borderRadius:20}}>
+     <Image
+          source={{ uri: imageSource }}
+            style={{height:140,width:140,alignSelf:'center'}}
+            resizeMode='contain'
+          />
       
      </View> 
       <View>
         <TextInput
         placeholder='Product Name'
         style={styles.inputContainer}
+        onChangeText={(text) => setName(text)}
         />
         <TextInput
-        placeholder='Qunatity'
+        placeholder='Price'
         style={styles.inputContainer}
+        onChangeText={(price) => setPrice(price)}
         />
-        <TextInput
-        placeholder='Rate'
-        style={styles.inputContainer}
+        <SelectDropdown
+         data={countries}
         />
       </View>
       <TouchableHighlight style={{
@@ -38,7 +137,7 @@ const AddProducts = ({navigation}) => {
             borderRadius:8,
             justifyContent:'center'
           }}>
-      <Text style={{color:'white',alignSelf:'center',fontSize:15}}>Select Image</Text>
+      <Text style={{color:'white',alignSelf:'center',fontSize:15}} onPress={() => selectImage()}>Select Image</Text>
      </TouchableHighlight>
 
      <TouchableHighlight style={{
@@ -50,7 +149,7 @@ const AddProducts = ({navigation}) => {
             borderRadius:8,
             justifyContent:'center'
           }}>
-      <Text style={{color:'white',alignSelf:'center',fontSize:15}}>Save Category</Text>
+      <Text style={{color:'white',alignSelf:'center',fontSize:15}} onPress={AddProducts}>Save Product</Text>
      </TouchableHighlight>
     </View>
   )

@@ -10,11 +10,19 @@ import { Drawer } from 'react-native-paper'
 
 const DrawerContent = (props,{navigation}) => {
   const[NestedDrawerItem,setNestedDrawerItem]= useState(false)
+  const[NestedDrawerItem2,setNestedDrawerItem2]= useState(false)
   const nestedDrawerItemFunction=() =>{
     if(NestedDrawerItem == true) {
       setNestedDrawerItem(false)
     }else{
       setNestedDrawerItem(true)
+    }
+  }
+  const nestedDrawerItemFunction2=() =>{
+    if(NestedDrawerItem2 == true) {
+      setNestedDrawerItem2(false)
+    }else{
+      setNestedDrawerItem2(true)
     }
   }
   return (
@@ -73,10 +81,10 @@ const DrawerContent = (props,{navigation}) => {
         <MaterialIcons name='arrow-forward-ios'
           size={21} color='black'
           style={styles.arrowIcon} 
-          onPress={() => {nestedDrawerItemFunction()}}
+          onPress={() => {nestedDrawerItemFunction2()}}
           />
         </View>
-        {NestedDrawerItem == true &&
+        {NestedDrawerItem2 == true &&
         <DrawerItem
         onPress={() => {props.navigation.navigate('AddProducts')}}
         style={{marginLeft:'35%',marginTop:-10}}
@@ -86,7 +94,7 @@ const DrawerContent = (props,{navigation}) => {
         label='Add'
       />
       }
-       {NestedDrawerItem == true &&
+       {NestedDrawerItem2 == true &&
         <DrawerItem
         onPress={() => {props.navigation.navigate('ListProducts')}}
         style={{marginLeft:'35%',marginTop:-10}}
@@ -142,7 +150,7 @@ const DrawerContent = (props,{navigation}) => {
       </View>
       <View style={{ backgroundColor: '#fafafa', padding: 10, margin: 10, flexDirection: 'row', width: 120,left:140 }}>
             <MaterialCommunityIcons name='logout' size={25} color='#0caf9a' />
-            <Text style={{ fontSize: 17, color: 'black', marginLeft: 10 }}>Sign Out</Text>
+            <Text style={{ fontSize: 17, color: 'black', marginLeft: 10 }} onPress={() => {props.navigation.navigate('login')}}>Sign Out</Text>
           </View>
         
      
