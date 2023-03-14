@@ -6,7 +6,7 @@ import DrawerContent from '../DrawerContent';
 const Drawer = createDrawerNavigator();
 const DrawerNav = () => {
   return (
-    <Drawer.Navigator drawerContent={(props) => <DrawerContent  {...props}/>}>
+    <Drawer.Navigator drawerContent={(props) => <DrawerContent  {...props}/>} >
         <Drawer.Screen name= 'bottomTab' component={TabNavigation} options={{
             headerShown:false
         }}/>

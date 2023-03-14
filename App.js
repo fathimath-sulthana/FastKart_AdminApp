@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='DrawerNav'>
         <Stack.Screen name='login' component={Login}  options={{headerShown:false}}/>
         <Stack.Screen name='DrawerNav' component={DrawerNav}  options={{headerShown:false}}/>
         <Stack.Screen name='Category' component={Category}  options={{headerShown:false}}/>
@@ -51,3 +51,4 @@ const styles = StyleSheet.create({
   },
 
 })
+

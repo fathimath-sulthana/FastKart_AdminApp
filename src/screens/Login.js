@@ -1,14 +1,30 @@
-import React from 'react';
+import React ,{useState}from 'react';
 
-import {View, Text, StyleSheet, Image, TextInput, ScrollView,Dimensions, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, Image, TextInput, ScrollView,Dimensions, ImageBackground,Alert,AsyncStorage} from 'react-native';
 import { Title,Caption } from 'react-native-paper';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+import auth from '@react-native-firebase/auth'
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const SignIn = ({navigation}) => {
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const Login =() =>{
+    auth().signInWithEmailAndPassword(email,password).then((res) =>{
+           AsyncStorage.setItem(email,password)
+            console.log('user login successfull');
+            Alert.alert('Admin login successful !!')
+            navigation.navigate('DrawerNav')
+    })
+    .catch((error) =>{
+      console.log("error",error)
+      Alert.alert(error.message);
+    })
+  }
   return (
    
       <ScrollView style={{flex: 1,backgroundColor:'white' }}>
@@ -36,6 +52,9 @@ const SignIn = ({navigation}) => {
             style={styles.textinput}
             placeholder="Email address"
             placeholderTextColor={'black'}
+            value={email}
+            keyboardType='email-address'
+            onChangeText={setEmail}
           />
         </View>
         <View
@@ -50,6 +69,9 @@ const SignIn = ({navigation}) => {
             style={styles.textinput}
             placeholder="Password"
             placeholderTextColor={'black'}
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
             
           />
         </View>
@@ -64,7 +86,7 @@ const SignIn = ({navigation}) => {
             borderRadius:8,
             justifyContent:'center'
           }}>
-          <Text style={{alignSelf:'center',fontSize:17,color:"#fff"}} onPress={()=>{navigation.navigate('DrawerNav')}}> Sign in</Text>
+          <Text style={{alignSelf:'center',fontSize:17,color:"#fff"}} onPress={()=>Login()}> Sign in</Text>
         </View>
       
         <View style={{flexDirection:'row',justifyContent:'center'}}>

@@ -1,14 +1,39 @@
-import { StyleSheet, Text, TextInput, View ,Image,TouchableHighlight,Alert} from 'react-native'
+import { StyleSheet, Text,FlatList, TextInput, View ,Image,TouchableHighlight,Alert} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Title } from 'react-native-paper'
-import React,{useState} from 'react'
+import React,{useContext, useState,useEffect} from 'react'
 import SelectDropdown from 'react-native-select-dropdown'
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 import * as ImagePicker from "react-native-image-picker"
+
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-const AddProducts = (props,{navigation}) => {
-  const dropdownList = props.data
+const AddProducts = ({navigation}) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [keys,setKey]=useState();
+  const getData = (cid) => {
+    let array = [];
+       
+      database().ref('/CategoryList').on('value', snapshot => {
+          snapshot.forEach((snapshotItem) => {
+              var item = snapshotItem.val()
+             
+                  array.push(item)
+                  
+          })
+          setData(array);
+          array = [];
+          setKey(Object.keys(data))
+          console.log(data)
+          //console.log(keys)
+      });
+    }
+       useEffect(() =>{
+        getData()
+       })
+ const Data = ['Oils,Refined & Ghee','Rice, Flour & Grains','Food & Curry powder','Fresh fruits & vegetables','Drinks & Beverages','Instant Mixes','Dals & Pulses']
+ 
   const[name,setName]=useState('')
   const[price,setPrice]=useState('')
   const[category,setCategory]=useState('')
@@ -19,7 +44,7 @@ const AddProducts = (props,{navigation}) => {
     rootRef
     .child('Products/')
     .orderByChild('name','category','price')
-    .equalTo(name,quantity,price)
+    .equalTo(name,category,price)
     .once('value')
     .then(snapshot => {
       if (snapshot.exists()) {
@@ -106,11 +131,11 @@ const AddProducts = (props,{navigation}) => {
      </View>
      <Title style={{alignSelf:'center',color:'#0caf9a',fontSize:25}}>Add Product Details</Title>
      <View style={{height:'20%',width:'55%',padding:10,margin:10,alignSelf:'center',borderRadius:20}}>
-     <Image
-          source={{ uri: imageSource }}
+           <Image
+            source={{ uri: imageSource }}
             style={{height:140,width:140,alignSelf:'center'}}
             resizeMode='contain'
-          />
+             />
       
      </View> 
       <View>
@@ -124,9 +149,15 @@ const AddProducts = (props,{navigation}) => {
         style={styles.inputContainer}
         onChangeText={(price) => setPrice(price)}
         />
-        <SelectDropdown
-         data={countries}
-        />
+        
+          <SelectDropdown
+          searchPlaceHolderColor='Select Category'
+          data={Data}
+          onSelect={(text) => setCategory(text)}
+          //dropdownStyle={styles.inputContainer}
+          buttonStyle={styles.inputContainer}
+             />
+       
       </View>
       <TouchableHighlight style={{
             height: '6%',

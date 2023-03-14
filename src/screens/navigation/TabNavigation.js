@@ -46,7 +46,7 @@ const TabNavigation = () => {
         <Tab.Screen name='Account' component={Account}
         options={{
             headerShown:false,
-          tabBarLabel: "Settings",
+          tabBarLabel: "Account",
          tabBarLabelStyle:{
           color:'white',
           fontSize:15,
@@ -66,7 +66,7 @@ const TabNavigation = () => {
         <Tab.Screen name='Settings' component={Settings}
         options={{
             headerShown:false,
-          tabBarLabel: "Account",
+          tabBarLabel: "Settings",
          tabBarLabelStyle:{
           color:'white',
           fontSize:15,

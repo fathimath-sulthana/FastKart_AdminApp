@@ -7,7 +7,8 @@ import database from '@react-native-firebase/database';
 
 import Header from './Header'
 import AddProducts from './AddProducts'
-const ListCategory = (props,{ navigation }) => {
+import MyContext from '../components/MyContext'
+const ListCategory = ({ navigation }) => {
   const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [keys,setKey]=useState();
@@ -47,9 +48,9 @@ const ListCategory = (props,{ navigation }) => {
        })
   const renderList = ((item) => {
     return (
-      <View style={{ margin: 20 }}>
+      <View style={{ margin: 15 }}>
         
-        <View style={{ borderWidth: 1, alignSelf: 'flex-start', padding: 10, borderColor: '#0caf9a', margin: 5, borderRadius: 10 }}>
+        <View style={{ borderWidth: 1, alignSelf: 'flex-start', padding: 10, borderColor: '#0caf9a', borderRadius: 10 }}>
           <Image source={{uri :item.imageSource}} resizeMode='contain' style={{ height: 100, width: 100, margin: 7, padding: 7 }} />
           <Text style={{ color: 'black', margin: 10, fontSize: 16, alignSelf: 'center' }}>{item.name}</Text>
         </View>
@@ -59,9 +60,11 @@ const ListCategory = (props,{ navigation }) => {
     )
   })
   return (
-  
+    
     <ScrollView>
-      <AddProducts data={data}/>
+ 
+  
+   
       <View style={{ flexDirection: 'row', margin: 10, padding: 10, }}>
         <MaterialIcons name='arrow-back-ios' size={33} color='#0caf9a' onPress={() => navigation.pop()} />
         <Image source={require('../assets/ME.png')} style={{ position: 'absolute', right: 0, top: 15 }} />
@@ -82,9 +85,10 @@ const ListCategory = (props,{ navigation }) => {
           }}
         />
       </View>
-      <AddProducts data={data}/>
+    
     </ScrollView>
   )
+  
 }
 
 export default ListCategory

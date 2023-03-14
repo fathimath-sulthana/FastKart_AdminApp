@@ -5,12 +5,14 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-firebase/app": "^17.0.0",
+    "@react-native-firebase/auth": "^17.0.0",
     "@react-native-firebase/database": "^17.0.0",
     "@react-native-firebase/storage": "^17.0.0",
     "@react-native-masked-view/masked-view": "^0.2.8",
