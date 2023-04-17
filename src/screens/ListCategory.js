@@ -50,8 +50,10 @@ const ListCategory = ({ navigation }) => {
     return (
       <View style={{ margin: 15 }}>
         
-        <View style={{ borderWidth: 1, alignSelf: 'flex-start', padding: 10, borderColor: '#0caf9a', borderRadius: 10 }}>
-          <Image source={{uri :item.imageSource}} resizeMode='contain' style={{ height: 100, width: 100, margin: 7, padding: 7 }} />
+        <View style={{ borderWidth: 1, alignSelf: 'flex-start', padding: 10, borderColor: '#0caf9a', borderRadius: 10 }} >
+         <TouchableHighlight onPress={() => navigation.navigate('EditCategory',{item})}>
+         <Image source={{uri :item.imageSource}} resizeMode='contain' style={{ height: 100, width: 100, margin: 7, padding: 7 }} />
+         </TouchableHighlight>
           <Text style={{ color: 'black', margin: 10, fontSize: 16, alignSelf: 'center' }}>{item.name}</Text>
         </View>
         <View>

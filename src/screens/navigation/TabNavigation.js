@@ -25,7 +25,7 @@ const TabNavigation = () => {
          
       }}>
         <Tab.Screen name='DashBoard' component={DashBoard} options={{
-            headerShown:false,
+          headerShown:false,
           tabBarLabel: "Dashboard",
          tabBarLabelStyle:{
           color:'white',
@@ -45,9 +45,9 @@ const TabNavigation = () => {
         }}/>
         <Tab.Screen name='Account' component={Account}
         options={{
-            headerShown:false,
+          headerShown:false,
           tabBarLabel: "Account",
-         tabBarLabelStyle:{
+          tabBarLabelStyle:{
           color:'white',
           fontSize:15,
           marginTop:-25,

@@ -15,11 +15,12 @@ import AddCategory from './src/screens/AddCategory';
 import ListCategory from './src/screens/ListCategory';
 import AddProducts from './src/screens/AddProducts';
 import ListProducts from './src/screens/ListProducts';
+import EditCategory from './src/screens/EditCategory';
 const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='DrawerNav'>
+      <Stack.Navigator>
         <Stack.Screen name='login' component={Login}  options={{headerShown:false}}/>
         <Stack.Screen name='DrawerNav' component={DrawerNav}  options={{headerShown:false}}/>
         <Stack.Screen name='Category' component={Category}  options={{headerShown:false}}/>
@@ -30,6 +31,7 @@ const App = () => {
         <Stack.Screen name='AddCategory' component={AddCategory}  options={{headerShown:false}}/>
         <Stack.Screen name='ListCategory' component={ListCategory}  options={{headerShown:false}}/>
         <Stack.Screen name='AddProducts' component={AddProducts}  options={{headerShown:false}}/>
+        <Stack.Screen name='EditCategory' component={EditCategory}  options={{headerShown:false}}/>
         <Stack.Screen name='ListProducts' component={ListProducts}  options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     shadowOpacity:0.25,
     shadowRadius:3.5,
     elevation:5
-  },
+    },
 
 })
 
